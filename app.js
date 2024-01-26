@@ -12,6 +12,12 @@ const messagePar = document.querySelector(".message");
 const scoreCardSection = document.querySelector(".score-card");
 const pcScoreSpan = document.getElementById("pc-score");
 const yourScoreSpan = document.getElementById("your-score");
+const topScoreSpan = document.getElementById("top-score");
+// console.log(topScoreSpan.textContent);
+// localStorage.setItem("top score",topScoreSpan.textContent)
+// localStorage.setItem("high score",0)
+// let newScore=Math.abs(Number(pcScoreSpan.textContent)-Number(yourScoreSpan.textContent))
+// console.log(typeof newScore);
 
 //? Modal
 const modalCardSection = document.querySelector(".modal-card");
@@ -29,7 +35,7 @@ const GREEN = "#5ab7ac";
 
 //* ------- Event Listeners ------- */
 selectionArticle.addEventListener("click", (e) => {
-    // console.log(e.target.id)
+    // console.log(e.target.id) //*BU TIKLANAN YERİ YAZDIRIR OBJECT ÇIKTI VERİRİ.BU ÇIKTILAR ARASINDA TARGET.ALT TARGET.İD GENELDE KULLANILIR
     if (e.target.id) {
         userSelectImg.src = `./assets/${e.target.id}.png`;
         userSelectImg.alt = e.target.id;
@@ -42,7 +48,13 @@ playAgainBtn.addEventListener("click", () => {
     // modalCardSection.classList.toggle("show")
     // modalCardSection.classList.toggle("remove")
     modalCardSection.style.display = "none";
-    window.location.reload();
+    // pcScoreSpan.textContent=0
+    // yourScoreSpan.textContent=0
+    location.reload();
+});
+//! Sayfa her yuklendikten sonra calisan event
+window.addEventListener("load", () => {
+    topScoreSpan.textContent = localStorage.getItem("top score")||"0:0";
 });
 
 //* ------- Functions ------- */
@@ -50,6 +62,7 @@ playAgainBtn.addEventListener("click", () => {
 const createPcSelection = () => {
     const pcArr = ["rock", "paper", "scissor"];
     pcRandom = pcArr[Math.floor(Math.random() * 3)];
+    // pcRandom = pcArr[0]
     pcSelectImg.src = `./assets/${pcRandom}.png`;
     pcSelectImg.alt = pcRandom;
     pcChoiceDiv.appendChild(pcSelectImg);
@@ -77,6 +90,8 @@ const calculateResult = () => {
         pcScoreSpan.textContent === "10" ||
         yourScoreSpan.textContent === "10"
     ) {
+        topScore();
+
         openModal();
     }
 };
@@ -101,6 +116,23 @@ const youWin = () => {
     yourScoreSpan.textContent++;
 };
 
+
+const topScore = () => {
+    let newScore = Math.abs(
+        Number(pcScoreSpan.textContent) - Number(yourScoreSpan.textContent)
+    );
+    if (newScore > +localStorage.getItem("high score")) {
+        // console.log(+newScore);
+        // console.log(+localStorage.getItem("high score"));
+        localStorage.setItem("high score", newScore);
+        localStorage.setItem(
+            "top score",
+            `${+yourScoreSpan.textContent} : ${+pcScoreSpan.textContent}`
+        );
+        topScoreSpan.textContent = localStorage.getItem("top score");
+    }
+};
+
 //? modal aç
 const openModal = () => {
     modalCardSection.classList.add("show");
@@ -119,8 +151,8 @@ const openModal = () => {
 };
 
 //! Local Storage'a veri yazma ve okuma
-localStorage.setItem("highScore", 5); //? veri yazma
-console.log(localStorage.getItem("highScore")); //? veri okuma
+// localStorage.setItem("highScore", 5) //? veri yazma
+// console.log(localStorage.getItem("highScore")) //? veri okuma
 
 //! İlkel Yontem
 //? Resimler
