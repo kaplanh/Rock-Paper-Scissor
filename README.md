@@ -35,6 +35,7 @@ Rock-Paper-Scissor (folder)
   - DOM Manipulations
   - DOM Selectors
   - Events
+  - Capturing & Bubling (https://www.w3schools.com/js/js_htmldom_eventlistener.asp or https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
   - addEventListener("event",(event)=>{})
   - Functions(Math.floor(Math.random() * 3))
   - if else - if - else conditions
