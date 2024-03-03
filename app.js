@@ -14,10 +14,10 @@ const pcScoreSpan = document.getElementById("pc-score");
 const yourScoreSpan = document.getElementById("your-score");
 const topScoreSpan = document.getElementById("top-score");
 // console.log(topScoreSpan.textContent);
-// localStorage.setItem("top score",topScoreSpan.textContent)
-// localStorage.setItem("high score",0)
-// let newScore=Math.abs(Number(pcScoreSpan.textContent)-Number(yourScoreSpan.textContent))
-// console.log(typeof newScore);
+// localStorage.setItem("topScore",topScoreSpan.textContent) //"1:10" gibi
+// localStorage.setItem("highestDifference",0) // baslangicta 0
+// let newDifference=Math.abs(Number(pcScoreSpan.textContent)-Number(yourScoreSpan.textContent))// 3, 5 gibi bir sayi
+// console.log(typeof newDifference,newDifference);
 
 //? Modal
 const modalCardSection = document.querySelector(".modal-card");
@@ -54,7 +54,7 @@ playAgainBtn.addEventListener("click", () => {
 });
 //! Sayfa her yuklendikten sonra calisan event
 window.addEventListener("load", () => {
-    topScoreSpan.textContent = localStorage.getItem("top score")||"0:0";
+    topScoreSpan.textContent = localStorage.getItem("topScore")||"0:0";
 });
 
 //* ------- Functions ------- */
@@ -118,18 +118,18 @@ const youWin = () => {
 
 
 const topScore = () => {
-    let newScore = Math.abs(
+    let newDifference = Math.abs(
         Number(pcScoreSpan.textContent) - Number(yourScoreSpan.textContent)
-    );
-    if (newScore > +localStorage.getItem("high score")) {
-        // console.log(+newScore);
-        // console.log(+localStorage.getItem("high score"));
-        localStorage.setItem("high score", newScore);
+    );//baslangicta 0 ve sonra  1,3 gibi bir sayi
+    if (newDifference > +localStorage.getItem("highestDifference")) {
+        console.log(+newDifference);
+        // console.log(+localStorage.getItem("highestDifference"));
+        localStorage.setItem("highestDifference", newDifference);
         localStorage.setItem(
-            "top score",
+            "topScore",
             `${+yourScoreSpan.textContent} : ${+pcScoreSpan.textContent}`
         );
-        topScoreSpan.textContent = localStorage.getItem("top score");
+        topScoreSpan.textContent = localStorage.getItem("topScore");
     }
 };
 
